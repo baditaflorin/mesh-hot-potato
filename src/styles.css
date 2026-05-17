@@ -49,3 +49,104 @@ body,
   opacity: 0.6;
   font-variant-numeric: tabular-nums;
 }
+
+.potato-screen {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 5rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+  transition: opacity 0.18s ease;
+}
+.potato-screen h1 {
+  margin: 0;
+  text-align: center;
+  color: var(--mesh-accent);
+}
+.potato-flash {
+  opacity: 0.55;
+}
+.potato-name {
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  font: inherit;
+}
+.potato-armed {
+  margin: 0;
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+.potato-display {
+  border: 1px solid rgba(255, 92, 51, 0.5);
+  border-radius: 0.8rem;
+  background: rgba(255, 92, 51, 0.08);
+  padding: 1.4rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+}
+.potato-emoji {
+  font-size: 3.2rem;
+  line-height: 1;
+}
+.potato-line {
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+.potato-fling {
+  padding: 1rem;
+  border-radius: 0.8rem;
+  border: none;
+  background: #ff5c33;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+}
+.potato-start {
+  padding: 0.7rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.potato-alive {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.potato-alive li {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.9rem;
+}
+.potato-out {
+  text-decoration: line-through;
+  opacity: 0.45;
+}
+.potato-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  opacity: 0.75;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}

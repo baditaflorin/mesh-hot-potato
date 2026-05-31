@@ -24,7 +24,19 @@ type PotatoEvent = {
   peerId: string;
   ts: number;
 };
-const ROUND_MS = 15_000;
+const DEFAULT_ROUND_MS = 15_000;
+
+/**
+ * Round duration in ms. Defaults to 15s; overridable via `?round=<ms>` so the
+ * timer→elimination loop is drivable headless without a 15s wait. Clamped to
+ * a sane floor so a hostile/typo'd value can't busy-spin the deadline.
+ */
+function roundMs(): number {
+  if (typeof window === "undefined") return DEFAULT_ROUND_MS;
+  const raw = new URLSearchParams(window.location.search).get("round");
+  const n = raw ? Number(raw) : NaN;
+  return Number.isFinite(n) && n >= 300 ? n : DEFAULT_ROUND_MS;
+}
 
 export function Feature({ room, config }: Props) {
   if (!room) {
@@ -68,7 +80,8 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
   const alive = present.filter((p) => !elimSet.has(p));
   const iAmHolder = holderId === room.peerId;
   const iAmEliminated = elimSet.has(room.peerId);
-  const deadline = useDeadline(since && holderId ? since + ROUND_MS : null);
+  const roundDuration = roundMs();
+  const deadline = useDeadline(since && holderId ? since + roundDuration : null);
   const flash = useFlashOnChange(holderId);
 
   const pickFirstHolder = () => {

@@ -1,7 +1,7 @@
 # mesh-hot-potato
 
 [![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-hot-potato-ff5c33)](https://baditaflorin.github.io/mesh-hot-potato/)
-[![version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/baditaflorin/mesh-hot-potato/blob/main/package.json)
+[![version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/baditaflorin/mesh-hot-potato/blob/main/package.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
 > Virtual hot potato — shake to fling, vibrate while holding, timer = elimination.

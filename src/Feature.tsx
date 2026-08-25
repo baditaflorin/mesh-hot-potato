@@ -8,6 +8,7 @@ import {
   useFairRng,
   useFlashOnChange,
   useNamedPeer,
+  useAwareness,
   useRoster,
   useShake,
   useVibration,
@@ -53,8 +54,21 @@ export function Feature({ room, config }: Props) {
 function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
   const { name, setName, nameOf, myName } = useNamedPeer(config, room);
   const roster = useRoster(room);
+  const awareness = useAwareness(room);
   const log = useEventLog<PotatoEvent>(room, "events");
-  const fair = useFairRng(room, "potato-salts");
+  // Fair randomness now waits on the currently present roster rather than
+  // accepting an unscoped local salt. This keeps every fresh potato round
+  // deterministic for the same set of players while still working solo.
+  // The roster heartbeat is intentionally conservative (seconds), while a
+  // live hot-potato round needs the just-connected peer immediately. Include
+  // current awareness peers as a live supplement, never historical names.
+  const present = Array.from(
+    new Set([room.peerId, ...roster.present, ...awareness.peers.keys()]),
+  ).sort();
+  const fair = useFairRng(room, "potato-salts", {
+    peerIds: present,
+    minContributors: 1,
+  });
   const vibe = useVibration();
   const { burst } = useConfetti();
   const [, rerender] = useState(0);
@@ -76,7 +90,6 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
   const round = (potato.get("round") as number | undefined) ?? 0;
   const elimList = eliminated.toArray();
   const elimSet = new Set(elimList);
-  const present = roster.present.length > 0 ? roster.present : [room.peerId];
   const alive = present.filter((p) => !elimSet.has(p));
   const iAmHolder = holderId === room.peerId;
   const iAmEliminated = elimSet.has(room.peerId);
@@ -121,7 +134,6 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
       ts: Date.now(),
     });
     vibe.vibrate(80);
-    fair.rerollMine();
   };
 
   // shake → fling
